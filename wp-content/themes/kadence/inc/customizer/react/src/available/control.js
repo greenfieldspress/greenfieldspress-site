@@ -1,0 +1,1 @@
+import{createRoot}from'@wordpress/element';import AvailableComponent from'./available-component.js';export const AvailableControl=wp.customize.KadenceControl.extend({renderContent:function renderContent(){let control=this;let root=createRoot(control.container[0]);root.render(<AvailableComponent control={control}customizer={wp.customize}/>);}});
