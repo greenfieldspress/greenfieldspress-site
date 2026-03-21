@@ -1,1 +1,1 @@
-export*from'@automattic/jetpack-script-data';
+export * from '@automattic/jetpack-script-data';
