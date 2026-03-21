@@ -1,1 +1,1 @@
-window.videoPressResumableEnabled=true;
+window.videoPressResumableEnabled = true;
