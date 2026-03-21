@@ -1,0 +1,15 @@
+export class ReactConditions{constructor(currentField,allFields){this.currentField=currentField;this.allFields=allFields;this.disabledReason=this._getDefaultDisabledReason();this.fieldConditionKeyBlocklist=['disabledTooltipText'];}
+isEnabled(){if(!this.currentField.react_conditions)return true;return this._evaluateGroup(this.currentField.react_conditions);}
+getDisabledTooltipText(){return this.disabledReason;}
+_getDefaultDisabledReason(){return((this.currentField.hasOwnProperty('disabled')&&this.currentField.hasOwnProperty('disabledTooltipText')&&this.currentField.disabled)?this.currentField.disabledTooltipText:'');}
+_evaluateGroup(group){const relation=group.relation?group.relation.toUpperCase():'AND';const subResults=Object.keys(group).filter(key=>key!=='relation').map(key=>{const subCondition=group[key];if(typeof subCondition==='object'&&subCondition.hasOwnProperty('relation')){return this._evaluateGroup(subCondition);}
+if(typeof subCondition==='object'){return this._evaluateFieldConditions(subCondition);}
+return false;});return relation==='AND'?subResults.every(result=>result):subResults.some(result=>result);}
+_evaluateFieldConditions(conditionObject){let allowedKeysOfGroup=Object.keys(conditionObject).filter(key=>(!this.fieldConditionKeyBlocklist.includes(key)));let fieldEnabledBasedOnGroupedCondition=allowedKeysOfGroup.every(rawFieldKey=>this._checkFieldCondition(rawFieldKey,conditionObject[rawFieldKey]));if(fieldEnabledBasedOnGroupedCondition===false){this.disabledReason=(conditionObject.hasOwnProperty('disabledTooltipText')?conditionObject.disabledTooltipText:'');}
+return fieldEnabledBasedOnGroupedCondition;}
+_checkFieldCondition(rawFieldKey,expectedValue){const isInverted=rawFieldKey.startsWith('!');const fieldKey=isInverted?rawFieldKey.substring(1):rawFieldKey;const field=this.allFields.find(field=>field.id===fieldKey);if(!field)return false;const conditionResult=this._evaluateField(field,expectedValue);return isInverted?!conditionResult:conditionResult;}
+_evaluateField(field,expectedValue){const actualValue=field.value;switch(field.type){case'text_checkbox':return actualValue&&actualValue.show===expectedValue;case'checkbox':return actualValue==expectedValue;case'multicheckbox':{const expectedArray=Array.isArray(expectedValue)?expectedValue:[expectedValue];return Array.isArray(actualValue)&&actualValue.some(val=>expectedArray.includes(val));}
+case'radio':return Array.isArray(expectedValue)?expectedValue.includes(actualValue):expectedValue===actualValue;default:if(expectedValue===true){return actualValue===1||actualValue==='1'||actualValue===true;}
+if(expectedValue===false){return actualValue===0||actualValue==='0'||actualValue===false;}
+if(typeof expectedValue==='string'&&expectedValue.includes('EMPTY')){return Array.isArray(actualValue)?actualValue.length===0:!actualValue;}
+return String(actualValue).toLowerCase()===String(expectedValue).toLowerCase();}}}
