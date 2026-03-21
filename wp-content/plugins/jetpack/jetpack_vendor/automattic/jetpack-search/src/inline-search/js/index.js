@@ -1,0 +1,1 @@
+import'../styles/corrected-query.scss';import'./corrected-query';

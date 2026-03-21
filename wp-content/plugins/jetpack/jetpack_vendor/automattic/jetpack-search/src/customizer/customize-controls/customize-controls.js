@@ -1,0 +1,4 @@
+function postSectionMessage(expanded){window.wp.customize.previewer.preview.targetWindow().postMessage({key:'jetpackSearchSectionOpen',expanded:expanded},'*');}
+function init(){window.wp.customize.bind('ready',function(){window.wp.customize.previewer.bind('ready',function(){if(window.wp.customize.previewer.loading){window.wp.customize.previewer.loading.done(function(){postSectionMessage(window.wp.customize.section('jetpack_search').expanded());});}
+window.wp.customize.section('jetpack_search').expanded.bind(function(){postSectionMessage(window.wp.customize.section('jetpack_search').expanded());});window.wp.customize.bind('change',function(){if(window.wp.customize.section('jetpack_search').expanded()){postSectionMessage(true);}});});});}
+if(document.readyState!=='loading'){init();}else{document.addEventListener('DOMContentLoaded',init);}
