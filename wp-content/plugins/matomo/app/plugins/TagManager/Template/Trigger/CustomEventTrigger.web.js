@@ -1,0 +1,3 @@
+(function(){return function(parameters,TagManager){function isMatchingEvent(value){var eventName=parameters.get('eventName');return eventName&&TagManager.utils.isObject(value)&&'event'in value&&value.event===eventName;}
+var missedEvents=[];var index=parameters.container.dataLayer.on(function(value){if(isMatchingEvent(value)){missedEvents.push(value.event);}});this.setUp=function(triggerEvent){parameters.container.dataLayer.off(index);for(var i=0;i<missedEvents.length;i++){triggerEvent({event:'mtm.CustomEvent','mtm.customEventMatch':missedEvents[i]});}
+parameters.container.dataLayer.on(function(value){if(isMatchingEvent(value)){triggerEvent({event:'mtm.CustomEvent','mtm.customEventMatch':value.event});}});};};})();
