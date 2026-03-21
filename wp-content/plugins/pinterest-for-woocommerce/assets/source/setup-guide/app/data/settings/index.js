@@ -1,0 +1,1 @@
+import{registerStore}from'@wordpress/data';import{STORE_NAME}from'./constants';import*as selectors from'./selectors';import*as actions from'./actions';import*as resolvers from'./resolvers';import{controls}from'./controls';import reducer from'./reducer';registerStore(STORE_NAME,{reducer,actions,controls,selectors,resolvers,});export const SETTINGS_STORE_NAME=STORE_NAME;

@@ -1,0 +1,1 @@
+export const getFeedIssues=(state)=>{return state.feedIssues;};export const getFeedState=(state)=>{return state.feedState;};export const getReportsRequestingError=(state,name)=>{return state.requestingErrors[name]||false;};export const isRequesting=(state)=>{return state.isRequesting||false;};
