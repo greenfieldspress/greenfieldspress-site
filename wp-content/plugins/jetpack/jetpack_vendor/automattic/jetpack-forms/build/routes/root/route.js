@@ -1,0 +1,1 @@
+import{redirect}from"@wordpress/route";var route={beforeLoad:()=>{throw redirect({href:"/forms"});}};export{route};
