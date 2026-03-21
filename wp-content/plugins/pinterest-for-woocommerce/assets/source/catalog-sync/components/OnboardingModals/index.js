@@ -1,0 +1,3 @@
+import{useSettingsSelect}from'../../../setup-guide/app/helpers/effects';import OnboardingAdsModal from'./OnboardingAdsModal';import OnboardingModal from'./OnboardingModal';import OnboardingErrorModal from'./OnboardingErrorModal';const OnboardingModals=({onCloseModal})=>{const adsCampaignIsActive=useSettingsSelect()?.ads_campaign_is_active;const couponRedeemInfo=useSettingsSelect()?.account_data?.coupon_redeem_info;if(!adsCampaignIsActive){return<OnboardingModal onCloseModal={onCloseModal}/>;}
+if(!couponRedeemInfo?.error_id){return<OnboardingAdsModal onCloseModal={onCloseModal}/>;}
+return<OnboardingErrorModal onCloseModal={onCloseModal}/>;};export default OnboardingModals;

@@ -1,0 +1,1 @@
+export const getUserInteractions=(state)=>{return state.userInteractions;};export const areInteractionsLoaded=(state)=>{return state.interactionsLoaded;};

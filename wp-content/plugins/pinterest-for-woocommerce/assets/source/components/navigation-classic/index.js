@@ -1,0 +1,1 @@
+import MainTabNav from'./main-tab-nav';const NavigationClassic=()=>{const navigationEnabled=!!window.wcAdminFeatures?.navigation;return navigationEnabled?null:<MainTabNav />;};export default NavigationClassic;
