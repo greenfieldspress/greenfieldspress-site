@@ -1,0 +1,1 @@
+(function($){$('body').on('click','.widget-gallery .no-carousel .tiled-gallery-item a',function(event){event.stopPropagation();return true;});})(jQuery);
