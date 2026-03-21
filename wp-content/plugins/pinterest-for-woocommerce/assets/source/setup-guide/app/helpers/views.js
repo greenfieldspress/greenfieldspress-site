@@ -1,1 +1,1 @@
-export const SETTINGS_VIEW='settings';
+export const SETTINGS_VIEW = 'settings';
