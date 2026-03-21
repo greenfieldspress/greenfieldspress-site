@@ -1,0 +1,2 @@
+import useLearningMode from"./LearningModeData";import{__}from"@wordpress/i18n";const Delete=(props)=>{const{deleteData}=useLearningMode();return(<button type="button"className="button button-red rsssl-learning-mode-delete"onClick={()=>deleteData(props.item,props.field.id)}>{}{}{}{__("Delete","really-simple-ssl")}</button>)}
+export default Delete
