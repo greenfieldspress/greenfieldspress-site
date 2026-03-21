@@ -1,0 +1,2 @@
+jQuery(function($){$('.wcs_deletion_error').on('click',function(e){e.preventDefault();if('#choose_default'===$(this).attr('href')){$('#wcs_delete_token_warning').find('li').html(wcs_payment_methods.choose_default_error);}else{$('#wcs_delete_token_warning').find('li').html(wcs_payment_methods.add_method_error);}
+$('#wcs_delete_token_warning').slideDown();});});
