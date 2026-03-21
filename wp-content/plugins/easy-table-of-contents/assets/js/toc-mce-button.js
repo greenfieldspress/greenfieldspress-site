@@ -1,0 +1,1 @@
+(function(){tinymce.PluginManager.add('toc_mce_button',function(editor,url){editor.addButton('toc_mce_button',{text:'TOC',icon:false,onclick:function(){editor.insertContent('[ez-toc]');}});});})();
