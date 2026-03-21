@@ -1,0 +1,2 @@
+var Piwik_Overlay_Translations=(function(){var translations=[];return{initialize:function(callback){Matomo_Overlay_Client.api('Overlay.getTranslations',function(data){translations=data;callback();});},get:function(identifier){if(typeof translations[identifier]=='undefined'){return identifier;}
+return translations[identifier];}};})();
