@@ -1,0 +1,2 @@
+window.onload=function(){if(typeof rsssl_onboard!=='undefined'){let onboarding=new Onboarding(rsssl_onboard.root,rsssl_onboard);onboarding.init();}
+if(typeof rsssl_profile!=='undefined'){let profile=new Profile(rsssl_profile.root,rsssl_profile);profile.init();}}
