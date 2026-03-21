@@ -1,0 +1,2 @@
+const TRACKABLE_SETTINGS=['enable_debug_logging','enhanced_match_support','automatic_enhanced_match_support','erase_plugin_data','product_sync_enabled','rich_pins_on_posts','rich_pins_on_products','save_to_pinterest','track_conversions',];function prepareForTracking(data={}){const preparedData={};TRACKABLE_SETTINGS.forEach((setting)=>{if(typeof data[setting]!=='undefined'){preparedData[setting]=data[setting];}});return preparedData;}
+export default prepareForTracking;
