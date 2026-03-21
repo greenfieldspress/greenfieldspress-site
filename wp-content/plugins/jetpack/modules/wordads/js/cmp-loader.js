@@ -1,0 +1,3 @@
+function a8c_cmp_callback(data){if(data&&data.scripts&&Array.isArray(data.scripts)){if(data.config){let configurationScript=document.createElement('script');configurationScript.id='cmp-configuration';configurationScript.type='application/configuration';configurationScript.innerHTML=JSON.stringify(data.config);document.head.appendChild(configurationScript);}
+data.scripts.forEach(function(scriptUrl){let script=document.createElement('script');script.src=scriptUrl;document.head.appendChild(script);});}}
+window.a8c_cmp_callback=a8c_cmp_callback;
