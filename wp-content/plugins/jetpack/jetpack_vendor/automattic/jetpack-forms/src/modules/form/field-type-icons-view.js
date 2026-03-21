@@ -1,0 +1,3 @@
+import{store,getContext,getElement}from'@wordpress/interactivity';import{getFieldTypeIconHtml}from'./field-type-icons.js';const NAMESPACE='jetpack/form';store(NAMESPACE,{callbacks:{watchFieldTypeIcon(){const{ref}=getElement();if(!ref){return;}
+if(ref.dataset.renderedType&&ref.innerHTML.trim()!==''){return;}
+const context=getContext();const fieldType=context.submission?.type||'text';ref.innerHTML=getFieldTypeIconHtml(fieldType);ref.dataset.renderedType=fieldType;},},});

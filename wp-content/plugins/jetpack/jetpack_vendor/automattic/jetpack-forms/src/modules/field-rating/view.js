@@ -1,0 +1,3 @@
+import{store,getContext,getElement}from'@wordpress/interactivity';import{renderRatingIconsHtml}from'../../blocks/field-rating/rating-icons.js';export{getRating,isRatingValue,getRatingDisplayValue}from'./helpers.js';const NAMESPACE='jetpack/form';store(NAMESPACE,{callbacks:{watchRatingIcons(){const{ref}=getElement();const context=getContext();let rating=context.submission?.rating;if(!rating&&ref?.dataset?.rating){try{rating=JSON.parse(ref.dataset.rating);}catch{}}
+if(!rating){return;}
+const{rating:ratingValue,maxRating,iconStyle,screenReaderText}=rating;ref.innerHTML=renderRatingIconsHtml(ratingValue,maxRating,iconStyle,screenReaderText);},},});
