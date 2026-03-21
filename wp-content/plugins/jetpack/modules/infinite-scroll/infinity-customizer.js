@@ -1,0 +1,3 @@
+(function($){$(document).ready(function(){if('undefined'!==typeof wp&&wp.customize&&wp.customize.selectiveRefresh){wp.customize.selectiveRefresh.bind('partial-content-rendered',function(placement){var content;if('string'===typeof placement.addedContent){content=placement.addedContent;}else if(placement.container){content=$(placement.container).html();}
+if(content){$(document.body).trigger('post-load',{html:content});}});if('undefined'===typeof MutationObserver){$(document.body).on('post-load',function(e,response){var rootElement=null;if(response.html&&-1!==response.html.indexOf('data-customize-partial')){if(window.infiniteScroll.settings.id){rootElement=$('#'+window.infiniteScroll.settings.id);}
+wp.customize.selectiveRefresh.addPartials(rootElement);}});}}});})(jQuery);
