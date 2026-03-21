@@ -1,0 +1,10 @@
+jQuery(function($){var geo_hash=false;function get_geo_hash(){var geo_hash_cookie=Cookies.get('woocommerce_geo_hash');if('string'===typeof geo_hash_cookie&&geo_hash_cookie.length){geo_hash=geo_hash_cookie;return true;}
+return false;}
+function needs_refresh(){return geo_hash&&(new URLSearchParams(window.location.search)).get('v')!==geo_hash;}
+var $append_hashes=function(){if(!geo_hash){return;}
+$('a[href^="'+wc_geolocation_params.home_url+'"]:not(a[href*="v="]), a[href^="/"]:not(a[href*="v="])').each(function(){var $this=$(this),href=$this.attr('href'),href_parts=href.split('#');href=href_parts[0];if(href.indexOf('?')>0){href=href+'&v='+geo_hash;}else{href=href+'?v='+geo_hash;}
+if(typeof href_parts[1]!=='undefined'&&href_parts[1]!==null){href=href+'#'+href_parts[1];}
+$this.attr('href',href);});};var $geolocate_customer={url:wc_geolocation_params.wc_ajax_url.toString().replace('%%endpoint%%','get_customer_location'),type:'GET',success:function(response){if(response.success&&response.data.hash&&response.data.hash!==geo_hash){$geolocation_redirect(response.data.hash);}}};var $geolocation_redirect=function(hash){Cookies.set('woocommerce_geo_hash',hash,{expires:1 / 24});const urlQuery=new URL(window.location).searchParams;const existingHash=urlQuery.get('v');if(existingHash!==hash){urlQuery.set('v',hash);window.location.search='?'+urlQuery.toString();}};function update_forms(){if(!geo_hash){return;}
+$('form').each(function(){var $this=$(this);var method=$this.attr('method');var hasField=$this.find('input[name="v"]').length>0;if(method&&'get'===method.toLowerCase()&&!hasField){$this.append('<input type="hidden" name="v" value="'+geo_hash+'" />');}else{var href=$this.attr('action');if(href){if(href.indexOf('?')>0){$this.attr('action',href+'&v='+geo_hash);}else{$this.attr('action',href+'?v='+geo_hash);}}}});}
+if(!get_geo_hash()||needs_refresh()){$.ajax($geolocate_customer);}
+update_forms();$append_hashes();$(document.body).on('added_to_cart',function(){$append_hashes();});$(document.body).on('woocommerce_append_geo_hashes',function(){$append_hashes();});});

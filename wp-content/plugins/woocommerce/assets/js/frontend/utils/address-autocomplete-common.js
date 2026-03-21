@@ -1,0 +1,16 @@
+(function(){window.wc=window.wc||{};window.wc.addressAutocomplete=window.wc.addressAutocomplete||{providers:{},activeProvider:{billing:null,shipping:null},serverProviders:[],};let serverProviders=[];try{let params=null;if(window&&window.wc_address_autocomplete_common_params){params=window.wc_address_autocomplete_common_params;}
+else if(window&&window.wc_address_autocomplete_params){params=window.wc_address_autocomplete_params;}
+if(params&&params.address_providers){const raw=params.address_providers;if(typeof raw==='string'){const parsed=JSON.parse(raw);serverProviders=Array.isArray(parsed)?parsed:[];}else if(Array.isArray(raw)){serverProviders=raw;}}}catch(e){console.error('Invalid address providers JSON:',e);}
+window.wc.addressAutocomplete.serverProviders=serverProviders;function registerAddressAutocompleteProvider(provider){try{if(!provider||typeof provider!=='object'){throw new Error('Address provider must be a valid object');}
+if(!provider.id||typeof provider.id!=='string'){throw new Error('Address provider must have a valid ID');}
+if(typeof provider.canSearch!=='function'){throw new Error('Address provider must have a canSearch function');}
+if(typeof provider.search!=='function'){throw new Error('Address provider must have a search function');}
+if(typeof provider.select!=='function'){throw new Error('Address provider must have a select function');}
+const serverProviders=window.wc.addressAutocomplete.serverProviders;if(!Array.isArray(serverProviders)){throw new Error('Server providers configuration is invalid');}
+var isRegistered=serverProviders.some(function(serverProvider){return(serverProvider&&typeof serverProvider==='object'&&typeof serverProvider.id==='string'&&serverProvider.id===provider.id);});if(!isRegistered){throw new Error('Provider '+provider.id+' not registered on server');}
+if(window.wc.addressAutocomplete.providers[provider.id]){console.warn('Address provider with ID "'+
+provider.id+'" is already registered.');return false;}
+Object.freeze(provider);window.wc.addressAutocomplete.providers[provider.id]=provider;if(window.wp&&window.wp.data&&window.wp.data.dispatch&&window.wc&&window.wc.wcBlocksData&&window.wc.wcBlocksData.checkoutStore){window.wp.data.dispatch(window.wc.wcBlocksData.checkoutStore).addAddressAutocompleteProvider(provider.id);}
+return true;}catch(error){console.error('Error registering address provider:',error.message);return false;}}
+window.wc.addressAutocomplete.registerAddressAutocompleteProvider=registerAddressAutocompleteProvider;window.wc.addressAutocomplete.getServerProvider=function(providerId){const serverProviders=window.wc.addressAutocomplete.serverProviders;if(!Array.isArray(serverProviders)){return null;}
+return(serverProviders.find(function(provider){return provider&&provider.id===providerId;})||null);};window.wc.addressAutocomplete.getProviders=function(){return window.wc.addressAutocomplete.providers;};window.wc.addressAutocomplete.getActiveProvider=function(type){return window.wc.addressAutocomplete.activeProvider[type]||null;};window.wc.addressAutocomplete.setActiveProvider=function(type,provider){window.wc.addressAutocomplete.activeProvider[type]=provider;};window.wc.addressAutocomplete.isBlocksContext=function(){return!!(window.wc&&window.wc.wcSettings&&window.wc.wcSettings.allSettings&&window.wc.wcSettings.allSettings.isCheckoutBlock);};})();
